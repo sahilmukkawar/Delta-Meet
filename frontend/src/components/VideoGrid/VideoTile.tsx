@@ -1,8 +1,16 @@
-import React, { useEffect, useRef } from 'react';
-import { VideoTileProps } from '../../types';
+import React, { useRef, useEffect } from 'react';
+import { Participant } from '../../types';
 import './VideoGrid.css';
 
-const getInitial = (name: string) => name ? name.charAt(0).toUpperCase() : '?';
+interface VideoTileProps {
+  stream: MediaStream;
+  participant: Participant;
+  isLocal: boolean;
+}
+
+const getInitial = (name: string) => {
+  return name.charAt(0).toUpperCase();
+};
 
 const VideoTile: React.FC<VideoTileProps> = ({ stream, participant, isLocal }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -26,7 +34,7 @@ const VideoTile: React.FC<VideoTileProps> = ({ stream, participant, isLocal }) =
           style={isLocal ? { transform: 'scaleX(-1)' } : {}}
         />
       ) : (
-        <div className="video-tile-avatar" style={{ background: participant.avatarColor || '#1a73e8' }}>
+        <div className="video-tile-avatar" style={{ background: '#1a73e8' }}>
           {participant.avatarUrl ? (
             <img src={participant.avatarUrl} alt={participant.name} className="video-tile-avatar-img" />
           ) : (

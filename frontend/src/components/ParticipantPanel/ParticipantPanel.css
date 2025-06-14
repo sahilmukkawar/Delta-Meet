@@ -1,0 +1,85 @@
+.participant-panel {
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 80px;
+  width: 320px;
+  background-color: var(--surface-color);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.participant-header {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.participant-header h2 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.participants-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+.participants-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.participants-list::-webkit-scrollbar-track {
+  background: var(--surface-color);
+}
+
+.participants-list::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 4px;
+}
+
+.participant-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  margin-bottom: var(--spacing-sm);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.participant-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.participant-avatar {
+  width: 32px;
+  height: 32px;
+  color: var(--text-secondary);
+}
+
+.participant-name {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.participant-controls {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.participant-controls .MuiIconButton-root {
+  padding: 4px;
+}
+
+.participant-controls .MuiIconButton-root:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+} 

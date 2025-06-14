@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import VideoGrid from '../components/VideoGrid/VideoGrid';
 import ChatPanel from '../components/ChatPanel/ChatPanel';
-import Controls from '../components/Controls/Controls';
+import MeetingControls from '../components/MeetingControls/MeetingControls';
 import WebRTCService from '../services/WebRTCService';
 import axios from 'axios';
 import AppBar from '@mui/material/AppBar';
@@ -29,6 +29,9 @@ interface Participant {
   id: string;
   name: string;
   stream?: MediaStream;
+  isMuted?: boolean;
+  isVideoOff?: boolean;
+  avatarUrl?: string;
 }
 
 const Meeting: React.FC<MeetingProps> = ({ user, token }) => {
@@ -92,7 +95,14 @@ const Meeting: React.FC<MeetingProps> = ({ user, token }) => {
   };
 
   const onParticipantJoined = (participant: Participant) => {
-    setParticipants(prev => [...prev, participant]);
+    setParticipants(prev => [
+      ...prev,
+      {
+        ...participant,
+        isMuted: participant.isMuted ?? false,
+        isVideoOff: participant.isVideoOff ?? false,
+      },
+    ]);
   };
 
   const onParticipantLeft = (participantId: string) => {
@@ -100,8 +110,8 @@ const Meeting: React.FC<MeetingProps> = ({ user, token }) => {
   };
 
   const onStreamReceived = (participantId: string, stream: MediaStream) => {
-    setParticipants(prev => 
-      prev.map(p => 
+    setParticipants(prev =>
+      prev.map(p =>
         p.id === participantId ? { ...p, stream } : p
       )
     );
@@ -213,15 +223,19 @@ const Meeting: React.FC<MeetingProps> = ({ user, token }) => {
       <div style={{ height: 64 }} />
       <div className="meeting-content">
         <div className={`video-section ${isChatOpen ? 'with-chat' : ''}`}>
-          <VideoGrid 
+          <VideoGrid
             localStream={localStream}
-            participants={participants}
+            participants={participants.map(p => ({
+              ...p,
+              isMuted: p.isMuted ?? false,
+              isVideoOff: p.isVideoOff ?? false,
+              stream: p.stream ?? null,
+            }))}
             localUser={user}
           />
         </div>
-
         {isChatOpen && (
-          <ChatPanel 
+          <ChatPanel
             meetingId={meetingId!}
             user={user}
             token={token}
@@ -229,16 +243,17 @@ const Meeting: React.FC<MeetingProps> = ({ user, token }) => {
           />
         )}
       </div>
-
-      <Controls
-        isVideoEnabled={isVideoEnabled}
-        isAudioEnabled={isAudioEnabled}
-        isScreenSharing={isScreenSharing}
+      <MeetingControls
+        meetingId={meetingId!}
+        user={user}
+        token={token}
+        onLeave={leaveMeeting}
+        onToggleMic={toggleAudio}
         onToggleVideo={toggleVideo}
-        onToggleAudio={toggleAudio}
+        isMuted={!isAudioEnabled}
+        isVideoOff={!isVideoEnabled}
         onToggleScreenShare={toggleScreenShare}
-        onToggleChat={() => setIsChatOpen(!isChatOpen)}
-        onLeaveMeeting={leaveMeeting}
+        isScreenSharing={isScreenSharing}
       />
     </div>
   );

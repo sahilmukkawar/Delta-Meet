@@ -1,0 +1,49 @@
+.meeting-controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: rgba(32, 33, 36, 0.98);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  z-index: 100;
+}
+
+.controls-left,
+.controls-center,
+.controls-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.control-button {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+.control-button:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.control-button.active {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.leave-button {
+  background: #ea4335 !important;
+  width: 48px !important;
+  height: 48px !important;
+}
+
+.leave-button:hover {
+  background: #dc3545 !important;
+}
+
+.leave-button svg {
+  transform: rotate(135deg);
+} 

@@ -7,10 +7,11 @@ export interface User {
 export interface Participant {
   id: string;
   name: string;
-  stream?: MediaStream;
-  avatarColor?: string;
+  stream: MediaStream | null;
+  isMuted: boolean;
+  isVideoOff: boolean;
   avatarUrl?: string;
-  isMuted?: boolean;
+  avatarColor?: string;
 }
 
 export interface Message {
@@ -42,9 +43,21 @@ export interface VideoTileProps {
   isLocal: boolean;
 }
 
+export interface Meeting {
+  id: string;
+  title: string;
+  createdBy: string;
+  participants: string[];
+  createdAt: Date;
+  isActive: boolean;
+}
+
 export interface ChatMessage {
   id: string;
-  sender: User;
-  content: string;
+  meetingId: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  message: string;
   timestamp: Date;
 } 
